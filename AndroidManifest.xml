@@ -2,9 +2,6 @@
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.crossbowffs.debugkit">
-    <uses-sdk
-        android:minSdkVersion="19"
-        android:targetSdkVersion="23"/>
     <application
         android:label="DebugKit">
         <activity android:name=".app.NotificationInfoActivity">
@@ -29,6 +26,6 @@
             android:value="Tweaks to simplify app reverse engineering"/>
         <meta-data
             android:name="xposedminversion"
-            android:value="2"/>
+            android:value="53"/>
     </application>
 </manifest>
