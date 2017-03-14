@@ -2,6 +2,8 @@ package com.crossbowffs.debugkit.xposed;
 
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.os.UserHandle;
 import com.crossbowffs.debugkit.utils.StackTraceUtils;
 import de.robv.android.xposed.IXposedHookLoadPackage;
@@ -16,7 +18,15 @@ public class NotificationManagerHook implements IXposedHookLoadPackage {
         XC_MethodHook hook = new XC_MethodHook() {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+                XposedBridge.log("---------- Received Notification ----------");
                 Notification notification = (Notification)param.args[2];
+                PendingIntent pendingIntent = notification.contentIntent;
+                if (pendingIntent != null) {
+                    Intent intent = (Intent)XposedHelpers.callMethod(notification.contentIntent, "getIntent");
+                    XposedBridge.log(" Action: " + intent.getAction());
+                    XposedBridge.log(" Component name: " + intent.getComponent());
+                    XposedBridge.log(" Extras: " + intent.getExtras());
+                }
                 String[] stacktrace = StackTraceUtils.getStackTrace();
                 notification.extras.putStringArray("__stacktrace", stacktrace);
                 XposedBridge.log("---------- Notification Stacktrace Start ----------");

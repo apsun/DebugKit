@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.service.notification.StatusBarNotification;
 import android.view.View;
+import com.crossbowffs.debugkit.app.NotificationInfoActivity;
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedHelpers;
@@ -33,7 +34,7 @@ public class NotificationGutsHook implements IXposedHookLoadPackage {
                     settingsButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Intent intent = new Intent("com.crossbowffs.debugkit.SHOW_NOTIFICATION_INFO");
+                            Intent intent = new Intent(NotificationInfoActivity.ACTION);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             intent.putExtra("__stacktrace", stacktrace);
                             context.startActivity(intent);
